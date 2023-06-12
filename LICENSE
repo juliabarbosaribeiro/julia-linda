@@ -1,21 +1,79 @@
-MIT License
+function setup() {
+  createCanvas(400, 400);
+}
 
-Copyright (c) 2023 juliabarbosaribeiro
+function draw() {
+  background(220);
+}
+//variáveis da bolinha
+let xBolinha = 300;
+let yBolinha = 200;
+let diametro = 15;
+let raio = diametro / 2 ;
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+//velocidade da bolinha
+let velocidadeXBolinha = 6;
+let velocidadeYBolinha = 6;
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+//variáveis da raquete
+let xRaquete = 5;
+let yRaquete = 150;
+let raqueteComprimento = 10;
+let raqueteAltura = 90;
+
+function setup() {
+  createCanvas(600, 400);
+}
+
+function draw() {
+  background(0);
+  mostraBolinha();
+  movimentaBolinha();
+  verificaColisaoBorda();
+  mostraRaquete();
+  movimentaMinhaRaquete();
+  verificaColisaoRaquete();
+}
+
+function mostraBolinha(){
+  circle(xBolinha, yBolinha, diametro);
+}
+
+function movimentaBolinha(){
+  xBolinha += velocidadeXBolinha;
+  yBolinha += velocidadeYBolinha;
+}
+
+function verificaColisaoBorda(){
+  if (xBolinha + raio> width ||
+     xBolinha - raio< 0){
+    velocidadeXBolinha *= -1;
+  }
+  if (yBolinha + raio> height ||
+     yBolinha - raio < 0){
+    velocidadeYBolinha *= -1;
+  }
+}
+
+function mostraRaquete(){
+  rect(xRaquete, yRaquete, raqueteComprimento, 
+      raqueteAltura);
+}
+
+function movimentaMinhaRaquete(){
+  if (keyIsDown(UP_ARROW)){
+    yRaquete -= 10;
+  }
+  if (keyIsDown(DOWN_ARROW)){
+    yRaquete += 10;
+  }
+}
+
+function verificaColisaoRaquete(){
+  if (xBolinha - raio < xRaquete + raqueteComprimento && 
+      yBolinha - raio < yRaquete + raqueteAltura && 
+      yBolinha + raio > yRaquete){
+    velocidadeXBolinha *= -1;
+  }
+}
